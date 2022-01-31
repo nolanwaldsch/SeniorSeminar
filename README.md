@@ -1,2 +1,2 @@
 # SeniorSeminar
-Game clip capture software
+Game clip capture software Senior Project
