@@ -1,10 +1,13 @@
-from turtle import done
 import cv2 as cv
 import numpy as np
-import os
+import pyautogui
+
+
 
 while(True):
-    screenshot = None
+    screenshot = pyautogui.screenshot()
+    screenshot = np.array(screenshot)
+
     cv.imshow('Computer Vision', screenshot)
 
     #press 'q' with the output window to force exit
