@@ -3,7 +3,6 @@ import numpy as np
 import pyautogui
 
 
-
 while(True):
     screenshot = pyautogui.screenshot()
     screenshot = np.array(screenshot)
