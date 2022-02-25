@@ -3,6 +3,16 @@ import numpy as np
 from time import time
 import win32gui, win32ui, win32con
 
+
+#finds the names of active windows
+def list_window_names():
+    def winEnumHandler(hwnd,ctx):
+        if win32gui.IsWindowVisible(hwnd):
+            print(hex(hwnd), win32gui.GetWindowText(hwnd))
+    win32gui.EnumWindows(winEnumHandler, None)
+
+list_window_names()
+
 def window_capture():
     w = 1920 # set this
     h = 1080 # set this
@@ -18,19 +28,29 @@ def window_capture():
     dataBitMap.CreateCompatibleBitmap(dcObj, w, h)
     cDC.SelectObject(dataBitMap)
     cDC.BitBlt( (0,0), (w, h) , dcObj, (0,0), win32con.SRCCOPY)
-    dataBitMap.SaveBitmapFile(cDC, 'debug.bmp')
+    
+    #save the screenshot
+    #dataBitMap.SaveBitmapFile(cDC, 'debug.bmp')
+    signedintsArray = dataBitMap.GetBitmapBits(True)
+    img = np.fromstring(signedIntsArray, dtype = 'uint8')
+    img.shape = (h, w, 4)
 
     # Free Resources
     dcObj.DeleteDC()
     cDC.DeleteDC()
     win32gui.ReleaseDC(hwnd, wDC)
     win32gui.DeleteObject(dataBitMap.GetHandle())
-'''
+
+
+    #dropping alpha channel, or cv.matchTemplate()will throw an eror
+    img = img [...,:3]
+    img = np.ascontiguousarray(img)
+
+    return img
+
 loop_time = time()
 while(True):
-    screenshot = ImageGrab.grab()
-    screenshot = np.array(screenshot)
-    screenshot = cv.cvtColor(screenchot, cv.COLOR_RGB2BGR)
+    screenshot = window_capture()
 
     cv.imshow('Computer Vision', screenshot)
 
@@ -42,5 +62,6 @@ while(True):
     if cv.waitKey(1) == ord('q'):
         cv.destroyAllWindows()
         break
-'''
+
+window_capture()
 print('Done.')
