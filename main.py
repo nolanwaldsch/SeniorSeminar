@@ -17,6 +17,7 @@ while(True):
 
     if cv.waitKey(1) == ord('s'):
         VideoRecording.RecordVideo
+        VoiceRecording.AudioRecording
         break
 
     #press 'q' with the output window to force exit
