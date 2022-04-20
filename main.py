@@ -1,8 +1,8 @@
-import cv2 as cv
+import cv2
 import numpy as np
 from time import time
-from ScreenCapture import WindowCapture
-
+import ScreenCapture
+import VideoRecording
 
 wincap = WindowCapture('WindowName')
 
@@ -10,20 +10,20 @@ loop_time = time()
 while(True):
     screenshot = wincap.get_screenshot()
 
-    cv.imshow('Computer Vision', screenshot)
+    cv2.imshow('Computer Vision', screenshot)
 
     print('FPS {}'.format(1 / time()-loop_time))
     loop_time = time()
 
-    if cv.waitKey(1) == ord('s'):
+    if cv2.waitKey(1) == ord('s'):
         VideoRecording.RecordVideo
         VoiceRecording.AudioRecording
         break
 
     #press 'q' with the output window to force exit
     #waits 1ms every loop to process key presses
-    if cv.waitKey(1) == ord('q'):
-        cv.destroyAllWindows()
+    if cv2.waitKey(1) == ord('q'):
+        cv2.destroyAllWindows()
         break
 
 window_capture()

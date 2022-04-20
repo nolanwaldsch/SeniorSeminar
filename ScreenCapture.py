@@ -1,5 +1,5 @@
 import numpy as np
-import win32gui, win32ui, win32con
+from win32api import win32gui, win32ui, win32con
 
 class WindowCapture:
 
@@ -9,8 +9,8 @@ class WindowCapture:
     hwnd = 0
     cropped_x = 0
     cropped_y = 0
-    offset_x
-    offset_y
+    offset_x = 0
+    offset_y = 0
 
 
     def __init__(self, window_name):
